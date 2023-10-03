@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Игра</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="java.js"></script>
+  </head>
+  <body>
+  <table border="1" bgcolor=#e3d1c5>
+    <tr align=center>
+        <td colspan=2 class="title">Игра</td>
+    <tr>
+        <td align=center style=width:15% valign="top">
+            <div class="vertical-menu">
+                <a href="index.html" >Меню</a>
+                <a href="Состав.html">Состав</a>
+                <a href="Каталог.html">Каталог</a>
+                <a href="Адреса.html">Адреса</a>
+                <a href="Игра.html" class="active">Поиграем?</a>
+                <a href="Написать нам.html">Написать нам</a>
+            </div>
+        </td>
+<td bgcolor=#FFFFFF valign=top align=center class="row1"> <a href="top"></a><p><big>Предлагаем вам немного отвлечься от выбора вкуснейшего мороженого, усмирить свой аппетит и немного вспомнить математику. Проверьте свои знания о таблице умножения.</big></p>
+<p><div id="app">
+  <div class="score"></div>
+  <div class="task"></div>
+  <div class="answers">
+    <ol></ol>
+  </div>
+  <div class="actions">
+    <button id="new-task" disabled>Cледующий пример</button>
+  </div>
+</div>
+<script>
+  class MultiplyTask {
+    constructor(a, b) {
+      this.a = a || Math.ceil(Math.random() * 8) + 1;
+      this.b = b || Math.ceil(Math.random() * 8) + 1;
+    }
+
+    get answer() {
+      return this.a * this.b;
+    }
+
+    test(x) {
+      return this.answer === x;
+    }
+
+    toString() {
+      return `${this.a} * ${this.b}`;
+    }
+  }
+
+  class App {
+    ANSWERS_SIZE = 4;
+
+    constructor(Task) {
+      this.Task = Task;
+      this.score = 0;
+      this.total = 0;
+      this.newTask();
+    }
+
+    newTask() {
+      this.task = new this.Task();
+      this.generateAnswers();
+    }
+
+    generateAnswers() {
+      const answer = this.task.answer;
+      const answers = [];
+
+      while (answers.length < this.ANSWERS_SIZE - 1) {
+        const random = Math.ceil(Math.random() * 98) + 1;
+
+        if (random === answer || answers.includes(random)) {
+          continue;
+        }
+
+        answers.push(random);
+      }
+
+      answers.splice(Math.floor(Math.random() * (answers.length + 1)), 0, answer);
+      this.answers = answers;
+    }
+
+    test(x) {
+      const result = this.task.test(x);
+      this.total += 1;
+      this.score += result ? 1 : 0;
+
+      return result;
+    }
+  }
+
+  class AppView {
+    constructor(params) {
+      const root = document.querySelector(params.el);
+
+      this.html = {
+        root,
+        score: root.querySelector('.score'),
+        task: root.querySelector('.task'),
+        answers: root.querySelector('.answers ol'),
+        newTaskBtn: root.querySelector('#new-task')
+      }
+
+      this.answer = null;
+      this.app = params.app;
+      this.bindHandlers();
+      this.newTask();
+    }
+
+    bindHandlers() {
+      this.html.answers.addEventListener('change', this.onChange);
+      this.html.newTaskBtn.addEventListener('click', this.onNewTaskClick);
+    }
+
+    onChange = e => {
+      if (this.answer === null) {
+        const value = parseInt(e.target.value);
+        this.answer = value;
+        this.app.test(value);
+        this.html.newTaskBtn.disabled = false;
+      }
+
+      this.render();
+    }
+
+    onNewTaskClick = e => {
+      if (this.answer === null) {
+        return;
+      }
+
+      e.target.disabled = true;
+      this.newTask();
+    }
+
+    newTask() {
+      this.answer = null;
+      this.app.newTask();
+      this.render();
+    }
+
+    render() {
+      this.renderScore();
+      this.renderTask();
+      this.renderAnswers();
+    }
+
+    renderScore() {
+      const {
+        score,
+        total
+      } = this.app;
+
+      if (total === 0) {
+        return this.html.score.textContent = 'Общий счет 0% (0 правильных ответов из 0)';
+      }
+
+      const percent = Math.round(score / total * 100);
+      this.html.score.textContent = `Общий счет ${percent}% (${score} правильных ответов из ${total})`
+    }
+
+    renderTask() {
+      this.html.task.textContent = this.app.task.toString() + ' =';
+    }
+
+    renderAnswers() {
+      this.html.answers.innerHTML = this.app.answers.map(answer => {
+        const checked = this.answer === answer ? 'checked' : '';
+
+        return `
+          <li class="li1">
+            <label>
+                <input type="radio" name="answer" value="${answer}" ${checked}>${answer}
+            </label>
+          </li>
+        `
+      }).join('');
+    }
+  }
+
+  new AppView({
+    el: '#app',
+    app: new App(MultiplyTask)
+  });
+</script>
+<p><img src="https://i.pinimg.com/564x/41/df/be/41dfbe763a549834caa57c90fee21887.jpg" alt="Иллюстрация"
+        width="600" height="500"></p>
+        <tr>
+       <td colspan=2 style="text-align: center">
+<div class="row1">Срок годности 4 месяца при температуре хранения не выше -18 градусов. Город Тюмень, СТО 0178151378-001-2017 </div>
+       </td>
+    </tr>
+</td>
+  </tr>
+  </table>
+  </body>
+</html>

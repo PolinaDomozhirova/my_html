@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Написать нам</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<table border="1" bgcolor=#e3d1c5>
+    <tr align=center>
+        <td colspan=2 class="title">Ваши предложения и отзывы</td>
+    <tr align=center>
+        <td align=center style=width:15% valign="top">
+            <div class="vertical-menu">
+                <a href="index.html" >Меню</a>
+                <a href="Состав.html" >Состав</a>
+                <a href="Каталог.html">Каталог</a>
+                <a href="Адреса.html">Адреса</a>
+                <a href="Игра.html">Поиграем?</a>
+                <a href="Написать нам.html" class="active">Написать нам</a>
+            </div>
+        </td>
+            <td bgcolor=#FFFFFF align=left valign=top class="row1"> <a href="top"></a><h2 align=center><b>Ваше мнение очень важно для нас!</b></h2>
+<form action="http://185.182.111.214:7628/cgi-bin/form_action.py" method='get' target='_self'>
+    <p>Имя: <input name="name" size=20 type="Text" placeholder="Петр"></p>
+    <p>Фамилия: <input name="name" size=20 type="Text" placeholder="Петров"></p>
+    <p>Возраст: <input name="age" size=20 type="Number" placeholder="0"></p>
+    <p>Email: <input type="email" name="login" placeholder="petrov@mail.ru"></p>
+    <p>Телефон в формате +7 xxx-xxx-xxxx:  <input type="tel" id="phone" name="phone" placeholder="904-956-3456"
+       pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+       required>
+    <p>Для комментариев:<br>
+        <TEXTAREA cols=80 name="textarea" rows=4 placeholder="Здесь вы можете поделиться впечатлениями от нашей продукции и выступить с предложениями."></TEXTAREA>
+    </p>
+    <p>Дата отправки комментария: <input name="user_date" type="date" value='2000-01-01'></p>
+     <p>
+        <input name="Reset" type="Reset" value="Обновить">
+        <input name="submit" type="Submit" value="Отправить">
+    </p>
+</form>
+    <p align=center class="navigation"> <a href="#top"><b>В начало</b></a></p>
+        </td>
+    <tr>
+       <td colspan=2 style="text-align: center">
+            <div class="row1">Срок годности 4 месяца при температуре хранения не выше -18 градусов. Город Тюмень, СТО 0178151378-001-2017 </div>
+       </td>
+    </tr>
+</table>
+</body>
+</html>
